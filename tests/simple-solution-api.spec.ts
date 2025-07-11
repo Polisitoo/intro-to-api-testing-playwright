@@ -71,3 +71,206 @@ test('post order with incorrect data should receive code 415', async ({ request 
   console.log('response body:', await response.json())
   expect(response.status()).toBe(StatusCodes.UNSUPPORTED_MEDIA_TYPE)
 })
+
+//HW 9
+
+//PUT (200)
+test('Успешное изменение заказа по корректному ID - 1 (200)', async ({ request }) => {
+  const requestBody = {
+    status: 'OPEN',
+    courierId: 0,
+    customerName: 'string',
+    customerPhone: 'string',
+    comment: 'string',
+    id: 0,
+  }
+  const requestHeaders: { api_key: string } = { 'api_key': '1234567890123456' };
+  const response = await request.put('https://backend.tallinn-learning.ee/test-orders/1', {
+    data: requestBody,
+    headers: requestHeaders
+  })
+  console.log('response status:', response.status())
+  console.log('response body:', await response.json())
+  expect(response.status()).toBe(StatusCodes.OK)
+})
+
+test('Успешное изменение заказа по корректному ID - 5 (200)', async ({ request }) => {
+  const requestBody = {
+    status: 'OPEN',
+    courierId: 0,
+    customerName: 'string',
+    customerPhone: 'string',
+    comment: 'string',
+    id: 0,
+  }
+  const requestHeaders: { api_key: string } = { 'api_key': '1234567890123456' };
+  const response = await request.put('https://backend.tallinn-learning.ee/test-orders/5', {
+    data: requestBody,
+    headers: requestHeaders
+  })
+  console.log('response status:', response.status())
+  console.log('response body:', await response.json())
+  expect(response.status()).toBe(StatusCodes.OK)
+})
+
+test('Успешное изменение заказа по корректному ID - 10 (200) ', async ({ request }) => {
+  const requestBody = {
+    status: 'OPEN',
+    courierId: 0,
+    customerName: 'string',
+    customerPhone: 'string',
+    comment: 'string',
+    id: 0,
+  }
+  const requestHeaders: { api_key: string } = { 'api_key': '1234567890123456' };
+  const response = await request.put('https://backend.tallinn-learning.ee/test-orders/10', {
+    data: requestBody,
+    headers: requestHeaders
+  })
+  console.log('response status:', response.status())
+  console.log('response body:', await response.json())
+  expect(response.status()).toBe(StatusCodes.OK)
+})
+
+//PUT (400)
+test('Не успешное изменение заказа с некорректным ID-0 (400) ', async ({ request }) => {
+  const requestBody = {
+    status: 'OPEN',
+    courierId: 0,
+    customerName: 'string',
+    customerPhone: 'string',
+    comment: 'string',
+    id: 0,
+  }
+  const requestHeaders: { api_key: string } = { 'api_key': '1234567890123456' };
+  const response = await request.put('https://backend.tallinn-learning.ee/test-orders/0', {
+    data: requestBody,
+    headers: requestHeaders
+  })
+  console.log('response status:', response.status())
+  console.log('response body:', await response.json())
+  expect(response.status()).toBe(StatusCodes.BAD_REQUEST)
+})
+
+test('Не успешное изменение заказа с некорректным ID-11 (400) ', async ({ request }) => {
+  const requestBody = {
+    status: 'OPEN',
+    courierId: 0,
+    customerName: 'string',
+    customerPhone: 'string',
+    comment: 'string',
+    id: 0,
+  }
+  const requestHeaders: { api_key: string } = { 'api_key': '1234567890123456' };
+  const response = await request.put('https://backend.tallinn-learning.ee/test-orders/11', {
+    data: requestBody,
+    headers: requestHeaders
+  })
+  console.log('response status:', response.status())
+  console.log('response body:', await response.json())
+  expect(response.status()).toBe(StatusCodes.BAD_REQUEST)
+})
+
+test('Не успешное изменение заказа без ID (405)', async ({ request }) => {
+  const requestBody = {
+    status: 'OPEN',
+    courierId: 0,
+    customerName: 'string',
+    customerPhone: 'string',
+    comment: 'string',
+    id: 0,
+  }
+  const requestHeaders: { api_key: string } = { 'api_key': '1234567890123456' };
+  const response = await request.put('https://backend.tallinn-learning.ee/test-orders/', {
+    data: requestBody,
+    headers: requestHeaders
+  })
+  console.log('response status:', response.status())
+  console.log('response body:', await response.json())
+  expect(response.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
+})
+
+test('Не успешное изменении заказа с ID в некорректном формате (400) ', async ({ request }) => {
+  const requestBody = {
+    status: 'OPEN',
+    courierId: 0,
+    customerName: 'string',
+    customerPhone: 'string',
+    comment: 'string',
+    id: 0,
+  }
+  const requestHeaders: { api_key: string } = { 'api_key': '1234567890123456' };
+  const response = await request.put('https://backend.tallinn-learning.ee/test-orders/pppp', {
+    data: requestBody,
+    headers: requestHeaders
+  })
+  console.log('response status:', response.status())
+  console.log('response body:', await response.json())
+  expect(response.status()).toBe(StatusCodes.BAD_REQUEST)
+})
+
+//GET (200)
+test('Успешная аутентификация с корректными логином и паролем (200)',async ({ request }) => {
+  const response = await request.get('https://backend.tallinn-learning.ee/test-orders?username=polina&password=abc')
+  console.log('response body:', await response.json())
+  console.log('response header:', response.headers())
+  expect(response.status()).toBe(StatusCodes.OK)
+})
+
+//GET (500)
+test('Не успешная аутентификация без логина и пароля (500)',async ({ request }) => {
+  const response = await request.get('https://backend.tallinn-learning.ee/test-orders?username=&password=')
+  console.log('response body:', await response.json())
+  console.log('response header:', response.headers())
+  expect(response.status()).toBe(StatusCodes.INTERNAL_SERVER_ERROR)
+})
+
+//DELETE (204)
+test('Успешное удаление заказа по корректному ID-1 (204)', async ({ request }) => {
+  const requestHeaders: { api_key: string } = { api_key: '1234567890123456' }
+  const response = await request.delete('https://backend.tallinn-learning.ee/test-orders/1', {
+    headers: requestHeaders,
+  })
+  expect(response.status()).toBe(StatusCodes.NO_CONTENT)
+})
+
+test('Успешное удаление заказа по корректному ID-5 (204)', async ({ request }) => {
+  const requestHeaders: { api_key: string } = { api_key: '1234567890123456' }
+  const response = await request.delete('https://backend.tallinn-learning.ee/test-orders/5', {
+    headers: requestHeaders,
+  })
+  expect(response.status()).toBe(StatusCodes.NO_CONTENT)
+})
+
+test('Успешное удаление заказа по корректному ID-10 (204)', async ({ request }) => {
+  const requestHeaders: { api_key: string } = { api_key: '1234567890123456' }
+  const response = await request.delete('https://backend.tallinn-learning.ee/test-orders/10', {
+    headers: requestHeaders,
+  })
+  expect(response.status()).toBe(StatusCodes.NO_CONTENT)
+})
+
+//DELETE (400)
+test('Не успешное удалении заказа с некорректным ID-0 (400)', async ({ request }) => {
+  const requestHeaders: { api_key: string } = { 'api_key': '1234567890123456' };
+  const response = await request.delete('https://backend.tallinn-learning.ee/test-orders/0', {
+    headers: requestHeaders,
+  })
+  expect(response.status()).toBe(StatusCodes.BAD_REQUEST)
+})
+
+test('Не успешное удалении заказа с некорректным ID-11 (400)', async ({ request }) => {
+  const requestHeaders: { api_key: string } = { 'api_key': '1234567890123456' };
+  const response = await request.delete('https://backend.tallinn-learning.ee/test-orders/11', {
+    headers: requestHeaders,
+  })
+  expect(response.status()).toBe(StatusCodes.BAD_REQUEST)
+})
+
+test('Не успешное удаление заказа без указания ID (405)', async ({ request }) => {
+  const requestHeaders: { api_key: string } = { 'api_key': '1234567890123456' };
+  const response = await request.delete('https://backend.tallinn-learning.ee/test-orders/', {
+    headers: requestHeaders,
+  })
+  expect(response.status()).toBe(StatusCodes.METHOD_NOT_ALLOWED)
+})
