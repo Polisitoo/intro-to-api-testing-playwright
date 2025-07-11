@@ -12,7 +12,6 @@ test('get order with correct id should receive code 200', async ({ request }) =>
   expect(response.status()).toBe(200)
 })
 
-
 test('post order with correct data should receive code 201', async ({ request }) => {
   // prepare request body
   const requestBody = {
@@ -32,7 +31,6 @@ test('post order with correct data should receive code 201', async ({ request })
   console.log('response body:', await response.json())
   expect(response.status()).toBe(StatusCodes.OK)
 })
-
 
 test('get order with orderID 0 should receive code 400', async ({ request }) => {
   // Build and send a GET request to the server
